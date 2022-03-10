@@ -1,7 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
-
-const getQuotes = () => fetch("/quotes");
+import { getQuotes } from "../services";
 
 export const MainPage = () => {
 	const [quotes, setQuotes] = useState([]);
