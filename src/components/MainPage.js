@@ -1,13 +1,31 @@
 import React from "react";
+import { useState, useEffect } from "react";
+
+const getQuotes = () => fetch("/quotes");
 
 export const MainPage = () => {
+	const [quotes, setQuotes] = useState([]);
+	const [isLoading, setIsLoading] = useState(true);
+
+	useEffect(
+		() =>
+			getQuotes()
+				.then((response) => response.json())
+				.then((data) => setQuotes(data))
+				.finally(() => setIsLoading(false)),
+		[]
+	);
+
 	return (
 		<>
 			<h1>Simpsons quotes</h1>
+
+			{isLoading && <p>Loading...</p>}
+
 			<ul>
-				<li>Test</li>
-				<li>Test</li>
-				<li>Test</li>
+				{quotes.map(({ quote }) => (
+					<li key={quote}>{quote}</li>
+				))}
 			</ul>
 		</>
 	);
